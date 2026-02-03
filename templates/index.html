@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Digitize | Paper to Digital Health Assessment</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>ECG Digitize</h1>
+            <p>Convert your paper ECG images into digital health insights using AI & Signal Processing</p>
+        </header>
+
+        <main class="main-grid">
+            <!-- Left: Upload Section -->
+            <section class="glass upload-card">
+                <div class="loader" id="loader"></div>
+                <div id="upload-content">
+                    <div class="drop-zone" id="drop-zone">
+                        <i data-lucide="upload-cloud"></i>
+                        <p>Drag & drop your ECG image</p>
+                        <span>or click to browse files</span>
+                        <input type="file" id="file-input" hidden accept="image/*">
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="{{ url_for('static', filename='sample_ecg.png') }}" download
+                            style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">
+                            <i data-lucide="download" style="width: 14px; height: 14px; vertical-align: middle;"></i>
+                            Download Sample ECG
+                        </a>
+                    </div>
+                    <div id="file-info" style="margin-top: 1rem; color: var(--text-muted); display: none;">
+                        <p id="filename-display"></p>
+                    </div>
+                    <button class="btn-analyze" id="btn-analyze" disabled>Analyze Signal</button>
+                </div>
+            </section>
+
+            <!-- Right: Results Section -->
+            <section class="glass results-card" id="results-card">
+                <div class="chart-container">
+                    <canvas id="ecgChart"></canvas>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Heart Rate</span>
+                        <div class="stat-value" id="val-hr">-- BPM</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Detected Abnormality</span>
+                        <div class="stat-value" id="val-abnormality">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Estimated Stress</span>
+                        <div class="stat-value" id="val-stress">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Signal Confidence</span>
+                        <div class="stat-value highlight" id="val-confidence">--%</div>
+                    </div>
+                </div>
+
+                <div class="advice-section">
+                    <h3>Medical Guidance</h3>
+                    <p class="advice-text" id="val-advice">Upload an image to see medical assessment and lifestyle
+                        advice.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
